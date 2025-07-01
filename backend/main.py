@@ -138,8 +138,8 @@ def ordered_crossover(parent1, parent2):
     size = len(parent1)    
     a, b = sorted(random.sample(range(size), 2))
     
-    child1 = [None] * size
-    child2 = [None] * size
+    child1 = [None for _ in range(size)]
+    child2 = [None for _ in range(size)]
     
     child1[a:b] = parent1[a:b]
     child2[a:b] = parent2[a:b]
@@ -147,8 +147,8 @@ def ordered_crossover(parent1, parent2):
     fill_child(child1, parent2, a, b)
     fill_child(child2, parent1, a, b)
     
-    parent1 = child1
-    parent2 = child2
+    parent1[:] = child2
+    parent2[:] = child1
 
 
 def mutate_swap(individual):
