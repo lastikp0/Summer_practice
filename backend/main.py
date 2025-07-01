@@ -76,12 +76,12 @@ def roulette_selection(population, fitness_values, size = POPULATION_SIZE):
         # can be rewriten with bisection
         for i, prob in enumerate(cumulative_probabilities):
             if pick <= prob:
-                offspring.append(population[i])
+                offspring.append(population[i][:])
                 new_size = s + 1
                 break
 
         if new_size == s:
-            offspring.append(population[-1])
+            offspring.append(population[-1][:])
     
     """
     part = 1 / size
@@ -101,13 +101,13 @@ def roulette_selection(population, fitness_values, size = POPULATION_SIZE):
     for pick in picks:
         for i, prob in enumerate(cumulative_probabilities):
             if pick <= prob:
-                offspring.append(population[i])
+                offspring.append(population[i][:])
 
                 flag = False
                 break
     
         if flag:
-            offspring.append(population[-1])
+            offspring.append(population[-1][:])
     """
 
     return offspring
