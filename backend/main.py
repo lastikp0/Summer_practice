@@ -2,11 +2,11 @@ import random
 
 MATRIX_NUMBER = 10
 
-MAX_GENERATIONS = 300
-POPULATION_SIZE = 300
+MAX_GENERATIONS = 200
+POPULATION_SIZE = 200
 
 P_CROSSOVER = 0.8
-P_MUTATION = 0.2
+P_MUTATION = 0.1
 MUTATION_TYPE = "shuffle"
 
 """
@@ -83,6 +83,33 @@ def roulette_selection(population, fitness_values, size = POPULATION_SIZE):
         if new_size == s:
             offspring.append(population[-1])
     
+    """
+    part = 1 / size
+
+    pick = random.random()
+    flag = True
+
+    picks = []
+    for i in range(size):
+        new_pick = pick + part * i
+
+        if new_pick > 1:
+            new_pick -= 1
+        
+        picks.append(new_pick)
+
+    for pick in picks:
+        for i, prob in enumerate(cumulative_probabilities):
+            if pick <= prob:
+                offspring.append(population[i])
+
+                flag = False
+                break
+    
+        if flag:
+            offspring.append(population[-1])
+    """
+
     return offspring
 
 
@@ -170,5 +197,5 @@ while generation_number < MAX_GENERATIONS:
     population[:] = offspring
     fitness_values = list(map(evaluate, population))
 
-best_index = fitness_values.index(max(fitness_values))
+best_index = fitness_values.index(min(fitness_values))
 print(population[best_index], fitness_values[best_index])
