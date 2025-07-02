@@ -2,20 +2,58 @@ import tkinter as tk
 from Visualizer.Auxilary.Utils import GUIUtils, ConfigUtils
 
 
-class EntryBox:
+class InputBox:
+    def __init__(self):
+        self.label = None
+        self.box = None
+
+    @staticmethod
+    def read(self):
+        pass
+
+    @staticmethod
+    def write(self, data):
+        pass
+
+    @staticmethod
+    def clear(self):
+        pass
+
+
+class EntryBox(InputBox):
     def __init__(self, master, name):
+        super().__init__()
         self.label = GUIUtils.make_label(master, name)
-        self.textbox = GUIUtils.make_text(master)
+        self.box = GUIUtils.make_text(master)
 
     def read(self):
-        return self.textbox.get("1.0", "end")[:-1]
+        return self.box.get("1.0", "end")[:-1]
 
     def write(self, data):
-        ConfigUtils.write_into_box(self.textbox, data)
+        ConfigUtils.write_into_box(self.box, data)
 
     def clear(self):
-        self.textbox.delete("1.0", "end")
+        self.box.delete("1.0", "end")
 
+
+class DropdownChoice(InputBox):
+    def __init__(self, master, name, variants):
+        super().__init__()
+        self.label = GUIUtils.make_label(master, name)
+        self.variants = variants
+        self.choice = variants[0]
+        self.box = GUIUtils.make_dropdown(master, variants)
+
+    def read(self):
+        self.choice = self.box.get()
+        return self.choice
+
+    def write(self, index=0):
+        self.box.set(self.variants[0])
+        self.choice = self.variants[0]
+
+    def clear(self):
+        self.choice = self.variants[0]
 
 class InfoBox:
     def __init__(self, master, caption):

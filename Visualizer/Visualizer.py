@@ -10,7 +10,7 @@ class Visualizer:
 
     def __init__(self, data_storage: DataStorage):
         self.master = tk.Tk()
-        self.master.geometry("1150x650")
+        self.master.geometry("1175x650")
         self.master.resizable(False, False)
 
         self.data_storage = data_storage
@@ -35,10 +35,10 @@ class Visualizer:
         InitFrameUtils.init_display_frame(self.view_answers_frame,
                                           row=1, column=1, columnspan=2, sticky="n", pady=(15, 15), padx=(15, 15))
 
-    def init_input(self, p_parameters: dict, m_parameters: dict):
-        InitFrameUtils.init_input_frame(self.parameters_frame, p_parameters,
+    def init_input(self):
+        InitFrameUtils.init_input_frame(self.parameters_frame,
                                         row=0, column=0, rowspan=2, pady=(15, 0), padx=(15, 0), sticky="n")
-        InitFrameUtils.init_input_frame(self.matrix_frame, m_parameters,
+        InitFrameUtils.init_input_frame(self.matrix_frame,
                                         row=2, column=0, sticky="n", pady=(0, 15), padx=(15, 0))
 
     def init_control_panel(self, buttons: dict):
@@ -94,6 +94,9 @@ class Visualizer:
         self.view_answers_frame.clear_data()
         self.graph_frame.clear_data()
         self.solutions_frame.clear_data()
+    
+    def show_warning(self, text):
+        tkinter.messagebox.showwarning(message=text)
 
 
 class InputFacade:
@@ -135,3 +138,6 @@ class OutputFacade:
 
     def clear_output(self):
         self.visualizer.clear_output()
+
+    def show_warning(self, text):
+        self.visualizer.show_warning(text)

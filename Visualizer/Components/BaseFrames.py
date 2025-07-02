@@ -45,12 +45,13 @@ class InputFrame(BaseFrame):
             i += 1
 
     @abc.abstractmethod
-    def init_contents(self, parameters: dict = None):
+    def init_contents(self):
         pass
 
     def generate_data(self):
         arr = self.generator.generate(len(self.parameters))
         i = -1
+
         for entrybox in self.parameters.values():
             i += 1
             entrybox.write(arr[i])
@@ -79,18 +80,18 @@ class InputFrame(BaseFrame):
     def get_all_parameters(self):
         res = []
         for entrybox in self.parameters.values():
-            res.append(entrybox.textbox.get("1.0", "end")[:-1])
+            res.append(entrybox.read())
         return res
 
     def disable_input(self):
         for entrybox in self.parameters.values():
-            entrybox.textbox.configure(state="disabled")
+            entrybox.box.configure(state="disabled")
         for button in self.buttons:
             button.configure(state="disabled")
 
     def enable_input(self):
         for entrybox in self.parameters.values():
-            entrybox.textbox.configure(state="normal")
+            entrybox.box.configure(state="normal")
         for button in self.buttons:
             button.configure(state="normal")
 

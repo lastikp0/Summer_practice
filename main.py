@@ -7,17 +7,13 @@ class Application:
     def __init__(self):
         self.data_storage = DataStorage()
         self.viz = Visualizer(self.data_storage)
-        self.input_f = InputFacade(viz)
-        self.output_f = OutputFacade(viz)
+        self.input_f = InputFacade(self.viz)
+        self.output_f = OutputFacade(self.viz)
         # self.algorithm = GenAlgorithm(data_storage)
 
 
     def init_viz(self):
-         self.viz.init_input({"Размер популяции": "population_size",
-                        "Вероятность скрещивания": "crossover_prob",
-                        "Вероятность мутации": "mutation_prob",
-                        "Максимум поколений": "max_generations"},
-                       {})
+         self.viz.init_input()
 
          self.viz.init_display()
 
@@ -54,10 +50,10 @@ class Application:
 
     def step_forward(self):
         self.output_f.clear_viewports()
-        solutions_IDs = [x for x in range(len(data_storage.solutions))]
+        solutions_IDs = [x for x in range(len(self.data_storage.solutions))]
         self.output_f.display_solutions_table(solutions_IDs)
 
-        best_solution_ID = random.randint(0, len(data_storage.solutions) - 1)
+        best_solution_ID = random.randint(0, len(self.data_storage.solutions) - 1)
         self.output_f.display_best_solution(best_solution_ID)
         # self.algorithm.step_forward()
 
@@ -72,17 +68,14 @@ def a():
     return Solution(lst, random.randint(100, 500))
 
 
-data_storage = DataStorage()
-data_storage.matrices_sizes = [50, 120, 40, 80, 60, 10, 20, 75, 30, 45, 90, 15]
-data_storage.solutions = [a() for i in range(10)]
-viz = Visualizer(data_storage)
+app = Application()
+app.init_viz()
 
 
 # ✓: Generators for Parameters and Matrix sizes
 # TODO: Proper reading from file function
 # ✓: Aliases for parameters of Input classes (so that we can pass their names to display and aliases to get)
 # TODO: Add Exceptions to Input classes with pop-up warning windows
-# TODO: Add a pop-up window asking for the number of sizes for random matrix sizes generation (??)
 
 # ✓: Figure out how to put parentheses...
 # ✓: Delete gen button from graph
