@@ -1,23 +1,24 @@
 def matrix_chain_order(dims):
-    n = len(dims) - 1  # Количество матриц
-    # Создаем таблицу для хранения минимального количества операций
-    dp = [[0] * n for _ in range(n)]
+    n = len(dims) - 1
+
+    dp = [None for _ in range(n)]
+    for i in range(n):
+        dp[i] = [0 for _ in range(n)]
     
-    # Заполняем таблицу для цепочек разной длины L
-    for L in range(2, n + 1):  # L - длина цепочки (от 2 до n)
-        for i in range(n - L + 1):  # Начало цепочки
-            j = i + L - 1           # Конец цепочки
-            dp[i][j] = float('inf') # Инициализируем бесконечностью
+    for L in range(2, n + 1):
+        for i in range(n - L + 1):
+            j = i + L - 1
+            dp[i][j] = float('inf')
             
-            # Перебираем все возможные точки разбиения
             for k in range(i, j):
-                # Считаем стоимость текущего разбиения
                 cost = dp[i][k] + dp[k+1][j] + dims[i] * dims[k+1] * dims[j+1]
+
                 if cost < dp[i][j]:
                     dp[i][j] = cost
                     
     return dp[0][n-1]
 
-dims = [6, 4, 7, 8, 4, 7, 6, 9, 8, 7, 10]
+dims = [10, 6, 9, 8, 3, 4, 4, 8, 5, 4, 8]
 result = matrix_chain_order(dims)
-print("Минимальное количество операций:", result)
+
+print("Min cost:", result)
