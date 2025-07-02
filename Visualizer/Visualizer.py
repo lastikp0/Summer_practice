@@ -3,6 +3,7 @@ from Visualizer.Components.OutputFrames import *
 from Visualizer.Components.Panels import *
 from Visualizer.Auxilary.Utils import InitFrameUtils
 from Visualizer.Components.DataStorage import *
+from Visualizer.Auxilary.Generator import *
 
 
 class Visualizer:
@@ -14,8 +15,8 @@ class Visualizer:
 
         self.data_storage = data_storage
 
-        self.parameters_frame = ParameterFrame(self.master, "Парметры алгоритма", None)
-        self.matrix_frame = MatrixFrame(self.master, "Размеры матриц", None)
+        self.parameters_frame = ParameterFrame(self.master, "Парметры алгоритма", GeneratorParams)
+        self.matrix_frame = MatrixFrame(self.master, "Размеры матриц", GeneratorMatrix)
 
         self.solutions_frame = SolutionsFrame(self.master, "Решения", self.display_solution)
         self.best_answer_frame = BestAnswerFrame(self.master, "Лучший ответ")

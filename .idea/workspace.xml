@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="AutoImportSettings">
-    <option name="autoReloadType" value="SELECTIVE" />
-  </component>
   <component name="ChangeListManager">
-    <list default="true" id="7b3f7e0d-90a2-417c-980f-41dbf7e84821" name="Changes" comment="">
+    <list default="true" id="54340e93-7e33-4164-9d2e-cc3d2982f4df" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Visualizer/Components/BaseFrames.py" beforeDir="false" afterPath="$PROJECT_DIR$/Visualizer/Components/BaseFrames.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Visualizer/Visualizer.py" beforeDir="false" afterPath="$PROJECT_DIR$/Visualizer/Visualizer.py" afterDir="false" />
     </list>
@@ -13,13 +11,6 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="Python Script" />
-      </list>
-    </option>
-  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -27,9 +18,10 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectColorInfo"><![CDATA[{
+  "customColor": "",
   "associatedIndex": 4
 }]]></component>
-  <component name="ProjectId" id="2zJIX0j2ZUDjMsL7sDcYAN6bMpQ" />
+  <component name="ProjectId" id="2zJWfHd8fgoTmxulgRAdhASnOlQ" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -41,19 +33,14 @@
     "git-widget-placeholder": "GUI__branch"
   }
 }]]></component>
-  <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Личное\Лабы\Summer_practice\Visualizer\Auxilary" />
-    </key>
-  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="7b3f7e0d-90a2-417c-980f-41dbf7e84821" name="Changes" comment="" />
-      <created>1751442784490</created>
+      <changelist id="54340e93-7e33-4164-9d2e-cc3d2982f4df" name="Changes" comment="" />
+      <created>1751449758558</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1751442784490</updated>
+      <updated>1751449758558</updated>
     </task>
     <servers />
   </component>
