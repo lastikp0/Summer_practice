@@ -2,34 +2,68 @@ import random
 from Visualizer.Components.DataStorage import *
 from Visualizer.Visualizer import Visualizer, InputFacade, OutputFacade
 
-def solve():
-    input_f.disable_input()
-    # algorithm.solve()
+
+class Application:
+    def __init__(self):
+        self.data_storage = DataStorage()
+        self.viz = Visualizer(self.data_storage)
+        self.input_f = InputFacade(viz)
+        self.output_f = OutputFacade(viz)
+        # self.algorithm = GenAlgorithm(data_storage)
 
 
-def clear():
-    input_f.enable_input()
-    output_f.clear_output()
-    input_f.clear_input()
+    def init_viz(self):
+         self.viz.init_input({"Размер популяции": "population_size",
+                        "Вероятность скрещивания": "crossover_prob",
+                        "Вероятность мутации": "mutation_prob",
+                        "Максимум поколений": "max_generations"},
+                       {})
+
+         self.viz.init_display()
+
+         self.viz.init_control_panel({"Шаг вперед": self.step_forward,
+                                "Шаг назад": self.step_backward,
+                                "До конца": self.to_the_end,
+                                "Решить": self.solve,
+                                "Сброс": self.clear})
+
+         self.viz.master.mainloop()
+
+    def solve(self):
+        self.input_f.disable_input()
+        matrices_sizes = self.input_f.get_matrices_sizes()
+        self.data_storage.matrices_sizes = matrices_sizes
+        population_size = self.input_f.get_algorithm_parameter("population_size")
+        crossover_prob = self.input_f.get_algorithm_parameter("crossover_prob")
+        mutation_prob = self.input_f.get_algorithm_parameter("mutation_prob")
+        max_generations = self.input_f.get_algorithm_parameter("max_generations")
+
+        # self.algorithm.solve()
 
 
-def to_the_end():
-    # algorithm.to_the_end()
-    input_f.enable_input()
+    def clear(self):
+        self.input_f.enable_input()
+        self.output_f.clear_output()
+        self.input_f.clear_input()
 
 
-def step_forward():
-    output_f.clear_viewports()
-    solutions_IDs = [x for x in range(len(data_storage.solutions))]
-    output_f.display_solutions_table(solutions_IDs)
-
-    best_solution_ID = random.randint(0, len(data_storage.solutions) - 1)
-    output_f.display_best_solution(best_solution_ID)
-    # algorithm.step_forward()
+    def to_the_end(self):
+        # algorithm.to_the_end()
+        self.input_f.enable_input()
 
 
-def step_backward():
-    pass
+    def step_forward(self):
+        self.output_f.clear_viewports()
+        solutions_IDs = [x for x in range(len(data_storage.solutions))]
+        self.output_f.display_solutions_table(solutions_IDs)
+
+        best_solution_ID = random.randint(0, len(data_storage.solutions) - 1)
+        self.output_f.display_best_solution(best_solution_ID)
+        # self.algorithm.step_forward()
+
+
+    def step_backward(self):
+        pass
 
 
 def a():
@@ -42,34 +76,15 @@ data_storage = DataStorage()
 data_storage.matrices_sizes = [50, 120, 40, 80, 60, 10, 20, 75, 30, 45, 90, 15]
 data_storage.solutions = [a() for i in range(10)]
 viz = Visualizer(data_storage)
-input_f: InputFacade = InputFacade(viz)
-output_f: OutputFacade = OutputFacade(viz)
-
-viz.init_input({"Размер популяции": "population_size",
-                "Вероятность скрещивания": "crossover_prob",
-                "Вероятность мутации": "mutation_prob",
-                "Максимум поколений": "max_generations"},
-
-               {})
-
-viz.init_display()
-
-viz.init_control_panel({"Шаг вперед": step_forward,
-                        "Шаг назад": step_backward,
-                        "До конца": to_the_end,
-                        "Решить": solve,
-                        "Сброс": clear})
-
-viz.master.mainloop()
 
 
-# TODO: Generators for Parameters and Matrix sizes
+# ✓: Generators for Parameters and Matrix sizes
 # TODO: Proper reading from file function
 # ✓: Aliases for parameters of Input classes (so that we can pass their names to display and aliases to get)
 # TODO: Add Exceptions to Input classes with pop-up warning windows
 # TODO: Add a pop-up window asking for the number of sizes for random matrix sizes generation (??)
 
-# TODO: Figure out how to put parentheses...
+# ✓: Figure out how to put parentheses...
 # ✓: Delete gen button from graph
 # ✓: Create an upper level function (at Visualizer probably) that will display chosen a chromosome
 
