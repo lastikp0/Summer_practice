@@ -49,9 +49,11 @@ class InputFrame(BaseFrame):
         pass
 
     def generate_data(self):
+        arr = self.generator.generate(len(self.parameters))
+        i = -1
         for entrybox in self.parameters.values():
-            # generator.generate(...)
-            entrybox.write("123")
+            i += 1
+            entrybox.write(arr[i])
 
     def read_data(self):
         filepath = fd.askopenfilename()
