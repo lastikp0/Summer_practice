@@ -19,11 +19,7 @@ class Application:
 
         self.viz.init_display()
 
-        self.viz.init_control_panel({"Шаг вперед": self.step_forward,
-                                     "Шаг назад": self.step_backward,
-                                     "До конца": self.to_the_end,
-                                     "Решить": self.solve,
-                                     "Сброс": self.clear})
+        self.viz.init_control_panel(self.solve, self.clear, self.step_forward, self.step_backward, self.to_the_end)
 
         self.viz.master.mainloop()
 
@@ -55,18 +51,25 @@ class Application:
     def solve(self):
         try:
             matrices_sizes = list(map(self.int_validation, self.input_f.get_matrices_sizes()))
+        except ValueError:
+            self.viz.show_warning("Введены некорректные размеры матриц")
+            return
+        try:
             population_size = self.int_validation(self.input_f.get_algorithm_parameter("population_size"))
             crossover_prob = self.float_validation(self.input_f.get_algorithm_parameter("crossover_prob"))
             mutation_prob = self.float_validation(self.input_f.get_algorithm_parameter("mutation_prob"))
             max_generations = self.int_validation(self.input_f.get_algorithm_parameter("max_generations"))
-            mutation_type = {"обмен": "swap", "обращение": "reverse", "перетасовка": "shuffle"}[
-                self.input_f.get_algorithm_parameter("mutation_type")]
-
         except ValueError:
-            self.viz.show_warning("Введены некорректные данные")
+            self.viz.show_warning("Введены некорректные числовые параметры алгоритма")
+            return
+        try:
+            mutation_type = self.input_f.get_algorithm_parameter("mutation_type")
+        except KeyError:
+            self.viz.show_warning("Введены некорректные типы мутаций")
             return
 
         self.input_f.disable_input()
+        self.input_f.start_solution()
         self.solver = Solver(max_generations, population_size, crossover_prob, mutation_prob, mutation_type,
                              matrices_sizes)
         self.data_storage.matrices_sizes = matrices_sizes
@@ -77,6 +80,7 @@ class Application:
         self.output_f.clear_output()
         self.input_f.clear_input()
         self.data_storage.clear()
+        self.input_f.end_solution()
 
     def to_the_end(self):
         self.solver.solve()
@@ -84,6 +88,8 @@ class Application:
         self.input_f.enable_input()
 
     def step_forward(self):
+        if len(self.data_storage.populations) >= 1:
+            self.input_f.enable_step_backward()
         self.output_f.clear_viewports()
         solutions_IDs = [x for x in range(len(self.data_storage.get_population()))]
         self.output_f.display_solutions_table(solutions_IDs)
@@ -94,8 +100,8 @@ class Application:
         self.update_population()
 
     def step_backward(self):
+        self.input_f.enable_step_backward()
         self.data_storage.pop_population()
-        print(len(self.data_storage.populations))
         self.solver.set_gen(self.solver.generation_number-1, [x.chromosome for x in self.data_storage.get_population()], self.solver.avg_all_gens[:-1], self.solver.best_all_gens[:-1])
 
         population = self.solver.population
@@ -103,6 +109,8 @@ class Application:
         #self.viz.display_best_solution(self.solver.get_best_index()))
         self.viz.display_best_solution(list(map(self.solver.evaluate, population)).index(self.solver.get_best()))
         self.viz.display_graph(self.solver.avg_all_gens, self.solver.best_all_gens)
+        if len(self.data_storage.populations) <= 1:
+    	    self.input_f.disable_step_backward()
 
 
 # ✓: Generators for Parameters and Matrix sizes
@@ -120,13 +128,7 @@ class Application:
 
 # ✓: Buttons at control panel must be bound to some app functions controlling the solution
 
-# TODO: Update buttons at control panel behavior according to algorithm's logic if needed
+# ✓: Update buttons at control panel behavior according to algorithm's logic if needed
 
 # ✓: Complete DataStorage class
 
-# Решить button should disable itself and input from Input classes (this will be done in app by facade)
-# Сброс button should clear input, output, enable Решить button
-
-# Control buttons call output functions (from facades) to display results of algorithm
-# До конца button makes the algorithm work to the end, then display result, enable Решить button and input
-# One-step buttons are obvious

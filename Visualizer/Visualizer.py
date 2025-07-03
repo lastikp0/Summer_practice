@@ -12,7 +12,7 @@ class Visualizer:
 
     def __init__(self, data_storage: DataStorage):
         self.master = tk.Tk()
-        self.master.geometry("1175x650")
+        self.master.geometry("1175x700")
         self.master.resizable(False, False)
 
         self.data_storage = data_storage
@@ -43,8 +43,13 @@ class Visualizer:
         InitFrameUtils.init_input_frame(self.matrix_frame,
                                         row=2, column=0, sticky="n", pady=(0, 15), padx=(15, 0))
 
-    def init_control_panel(self, buttons: dict):
-        self.control_panel.init_contents(buttons)
+    def init_control_panel(self, solve_command, clear_command, step_fwd_command, step_bwd_command, to_the_end_command):
+        self.control_panel.init_contents()
+        self.control_panel.init_commands(solve_command,
+                                         clear_command,
+                                         step_fwd_command,
+                                         step_bwd_command,
+                                         to_the_end_command)
         self.control_panel.frame.grid(row=3, column=0, columnspan=3, sticky="ew")
 
     def get_algorithm_parameter(self, parameter_key: str):
@@ -78,6 +83,9 @@ class Visualizer:
 
     def display_graph(self, x_arr: list, y_arr: list):
         self.graph_frame.draw_graph(x_arr, y_arr)
+        
+    def display_generation_info(self, generation_number, average_fitness, best_fitness):
+        self.graph_frame.display_info(generation_number, average_fitness, best_fitness)
 
     def disable_input(self):
         self.parameters_frame.disable_input()
@@ -96,6 +104,18 @@ class Visualizer:
         self.view_answers_frame.clear_data()
         self.graph_frame.clear_data()
         self.solutions_frame.clear_data()
+ 
+    def start_solution(self):
+        self.control_panel.start_solution()
+
+    def end_solution(self):
+        self.control_panel.block_steps()
+
+    def enable_step_backward(self):
+        self.control_panel.enable_step_backward()
+        
+    def disable_step_backward(self):
+        self.control_panel.disable_step_backward()
 
     def show_warning(self, text):
         tk.messagebox.showwarning(message=text)
@@ -117,6 +137,18 @@ class InputFacade:
     def enable_input(self):
         self.visualizer.enable_input()
 
+    def start_solution(self):
+        self.visualizer.start_solution()
+
+    def end_solution(self):
+        self.visualizer.end_solution()
+
+    def enable_step_backward(self):
+        self.visualizer.enable_step_backward()
+
+    def disable_step_backward(self):
+        self.visualizer.disable_step_backward()
+
     def clear_input(self):
         self.visualizer.clear_input()
 
@@ -137,9 +169,13 @@ class OutputFacade:
 
     def display_graph(self, x_arr: list, y_arr: list):
         self.visualizer.display_graph(x_arr, y_arr)
+        
+    def display_generation_info(self, generation_number, average_fitness, best_fitness):
+        self.visualizer.display_info(generation_number, average_fitness, best_fitness)
 
     def clear_output(self):
         self.visualizer.clear_output()
 
     def show_warning(self, text):
         self.visualizer.show_warning(text)
+

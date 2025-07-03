@@ -7,9 +7,9 @@ PARAMETERS = {"Размер популяции": "population_size",
               "Вероятность мутации": "mutation_prob",
               "Максимум поколений": "max_generations"}
 
-MUTATION_TYPES = ["обмен", "обращение", "перетасовка"]
+MUTATION_TYPES = {"обмен":"swap", "обращение":"reverse", "перетасовка":"shuffle"}
 
-SELECTION_TYPES = ["ранжированный"]
+SELECTION_TYPES = {"ранжированный":"ranged"}
 
 
 class ParameterFrame(InputFrame):

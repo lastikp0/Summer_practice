@@ -40,20 +40,27 @@ class DropdownChoice(InputBox):
     def __init__(self, master, name, variants):
         super().__init__()
         self.label = GUIUtils.make_label(master, name)
+        self.variants_keys = [x for x in variants.keys()]
         self.variants = variants
-        self.choice = variants[0]
-        self.box = GUIUtils.make_dropdown(master, variants)
+        self.box = GUIUtils.make_dropdown(master, self.variants_keys)
+        self.choice = self.write()
 
     def read(self):
-        self.choice = self.box.get()
+        self.choice = self.variants[self.box.get()]
         return self.choice
 
     def write(self, index=0):
-        self.box.set(self.variants[0])
-        self.choice = self.variants[0]
+        index = int(index)
+        if index >= len(self.variants_keys):
+            self.box.set("error")
+            self.choice = None
+            return 
+        self.box.set(self.variants_keys[index])
+        self.choice = self.variants[self.box.get()]
 
     def clear(self):
-        self.choice = self.variants[0]
+        self.write()
+        self.box.configure(state="readonly")
 
 class InfoBox:
     def __init__(self, master, caption):

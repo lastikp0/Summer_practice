@@ -74,7 +74,7 @@ class GUIUtils:
 
     @staticmethod
     def make_dropdown(master, variants):
-        return ttk.Combobox(master, values=variants, width=15)
+        return ttk.Combobox(master, values=variants, width=15, state="readonly")
 
 
 class InitFrameUtils:
