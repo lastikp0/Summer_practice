@@ -187,17 +187,19 @@ class Solver:
         self.avg_all_gens.append(self.get_avg())
         self.best_all_gens.append(self.get_best())
 
-
     def get_avg(self):
         return sum(self.fitness_values) / self.population_size
         
     def get_best(self):
         return min(self.fitness_values)
 
+    def get_best_ind(self):
+        best_index = self.fitness_values.index(self.get_best())
+
+        return self.population[best_index]
+
     def solve(self):
         while self.generation_number < self.max_generations:
             self.advance()
 
-        best_index = self.fitness_values.index(self.get_best())
-
-        return self.population[best_index]
+        return self.get_best_ind()
