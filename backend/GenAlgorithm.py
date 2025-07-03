@@ -193,13 +193,11 @@ class Solver:
     def get_best(self):
         return min(self.fitness_values)
 
-    def get_best_ind(self):
-        best_index = self.fitness_values.index(self.get_best())
-
-        return self.population[best_index]
+    def get_best_index(self):
+        return self.fitness_values.index(self.get_best())
 
     def solve(self):
         while self.generation_number < self.max_generations:
             self.advance()
 
-        return self.get_best_ind()
+        return self.population[self.get_best_index()]
