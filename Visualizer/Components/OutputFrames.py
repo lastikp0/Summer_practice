@@ -1,5 +1,5 @@
 from Visualizer.Components.BaseFrames import DisplayFrame
-from Visualizer.Auxilary.Composites import SolutionBox, ScrollableFrame, TabMenu
+from Visualizer.Auxilary.Composites import SolutionBox, ScrollableFrame, TabMenu, InfoBox
 from Visualizer.Auxilary.Utils import GUIUtils, ConfigUtils
 
 
@@ -89,20 +89,38 @@ class GraphFrame(DisplayFrame):
     def __init__(self, master, name):
         super().__init__(master, name)
         self.graph = GUIUtils.make_graph(self.contents)
+        self.generation_info = InfoBox(self.contents, "Поколение №")
+        self.average_fitness_info = InfoBox(self.contents, "Средняя приспособленность: ")
+        self.best_fitness_info = InfoBox(self.contents, "Лучшая приспособленность: ")
 
     def init_layout(self):
         self.title.grid(row=0, column=0, sticky="ew", columnspan=2)
         self.contents.grid(row=1, column=0)
-
+       
     def init_contents(self):
-        self.graph.get_tk_widget().grid(row=0, column=0)
+        self.graph.get_tk_widget().grid(row=1, column=0)
+        self.generation_info.frame.grid(row=0)
+        self.average_fitness_info.frame.grid(row=2,sticky="w")
+        self.best_fitness_info.frame.grid(row=3, sticky="w")
 
-    def draw_graph(self, x_arr, y_arr):
+    def display_info(self, generation_number, avg_fitness, best_fitness):
+        self.generation_info.write(generation_number)
+        self.average_fitness_info.write(avg_fitness)
+        self.best_fitness_info.write(best_fitness)
+
+    def draw_graph(self, y1_arr, y2_arr):
+        x_arr = range(1, len(y1_arr)+1)
         self.clear_data()
         axes = self.graph.figure.add_subplot(111)
-        axes.plot(x_arr, y_arr, '-rh', linewidth=1, markersize=0)
+        axes.plot(x_arr, y1_arr, color='red', linewidth=1, markersize=0, label='Среднее по популяции')
+        axes.plot(x_arr, y2_arr, color='green', linewidth=1, markersize=0, label='Минимальное по популяции')
         axes.grid()
+        axes.legend()
         self.graph.draw()
 
     def clear_data(self):
+        self.generation_info.clear()
+        self.average_fitness_info.clear()
+        self.best_fitness_info.clear()
         self.graph.figure.clear()
+        self.graph.draw()

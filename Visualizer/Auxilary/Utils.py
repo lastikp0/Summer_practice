@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import ttk
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
@@ -47,7 +48,7 @@ class GUIUtils:
         return tk.Label(master=master, text=text, anchor="w", bg="white")
 
     @staticmethod
-    def make_text(master, width=10, font=("Arial", 12)):
+    def make_text(master, width=13, font=("Arial", 12)):
         return tk.Text(master=master, height=1, width=width, font=font, wrap="none")
 
     @staticmethod
@@ -71,6 +72,10 @@ class GUIUtils:
         scrollable_object.configure(yscrollcommand=scrollbar.set)
         return scrollbar
 
+    @staticmethod
+    def make_dropdown(master, variants):
+        return ttk.Combobox(master, values=variants, width=15, state="readonly")
+
 
 class InitFrameUtils:
     @staticmethod
@@ -79,9 +84,9 @@ class InitFrameUtils:
         self.control_panel.frame.grid(row=3, column=0, columnspan=3, sticky="ew")
 
     @staticmethod
-    def init_input_frame(input_frame, parameters, **positioning):
+    def init_input_frame(input_frame, **positioning):
         input_frame.init_layout()
-        input_frame.init_contents(parameters)
+        input_frame.init_contents()
         input_frame.frame.grid(positioning)
 
     @staticmethod
@@ -100,7 +105,7 @@ class FileUtils:
         info = " ".join([x.strip() for x in file.readlines() if not x.isspace()])
         data = []
         try:
-            data = [float(x) for x in info.split(" ")]
+            data = info.split()
         except ValueError:
             print("invalid format")
             pass

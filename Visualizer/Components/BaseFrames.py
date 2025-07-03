@@ -45,50 +45,52 @@ class InputFrame(BaseFrame):
             i += 1
 
     @abc.abstractmethod
-    def init_contents(self, parameters: dict = None):
+    def init_contents(self):
         pass
 
     def generate_data(self):
+        arr = self.generator.generate(len(self.parameters))
+        i = -1
+
         for entrybox in self.parameters.values():
-            # generator.generate(...)
-            entrybox.write("123")
+            i += 1
+            entrybox.write(arr[i])
 
     def read_data(self):
         filepath = fd.askopenfilename()
         data = FileUtils.read_from_file(filepath)
-        print(data)  # TODO: set the logic properly...
         if not data:
             return
         i = 0
+        self.clear_data()
         for entrybox in self.parameters.values():
+            if i == len(data):
+                break
             entrybox.write(data[i])
-            i += 1  # TODO: we can have more fields than numbers in file... (index error)
+            i += 1
 
     def clear_data(self):
         for entrybox in self.parameters.values():
             entrybox.clear()
 
     def get_parameter(self, parameter_name):
-        try:
-            return self.parameters[parameter_name].read()
-        except KeyError:
-            pass
+        return self.parameters[parameter_name].read()
 
     def get_all_parameters(self):
         res = []
         for entrybox in self.parameters.values():
-            res.append(entrybox.textbox.get("1.0", "end")[:-1])
+            res.append(entrybox.read())
         return res
 
     def disable_input(self):
         for entrybox in self.parameters.values():
-            entrybox.textbox.configure(state="disabled")
+            entrybox.box.configure(state="disabled")
         for button in self.buttons:
             button.configure(state="disabled")
 
     def enable_input(self):
         for entrybox in self.parameters.values():
-            entrybox.textbox.configure(state="normal")
+            entrybox.box.configure(state="normal")
         for button in self.buttons:
             button.configure(state="normal")
 
