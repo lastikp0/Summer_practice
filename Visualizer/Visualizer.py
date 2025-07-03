@@ -96,7 +96,7 @@ class Visualizer:
         self.view_answers_frame.clear_data()
         self.graph_frame.clear_data()
         self.solutions_frame.clear_data()
-    
+
     def show_warning(self, text):
         tk.messagebox.showwarning(message=text)
 
