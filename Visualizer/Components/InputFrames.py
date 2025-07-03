@@ -41,7 +41,7 @@ class MatrixFrame(InputFrame):
 
     def init_contents(self):
 
-        self.parameters = {f"P_{i}": EntryBox(self.scrollable_frame.contents, f"P_{i}") for i in range(3)}
+        self.parameters = {f"P_{i}": EntryBox(self.scrollable_frame.contents, f"P_{i}") for i in range(4)}
 
         i = 1
         for entrybox in self.parameters.values():
@@ -66,7 +66,7 @@ class MatrixFrame(InputFrame):
         self.parameters[f"P_{num}"] = entrybox
 
     def remove_parameter(self):
-        if len(self.parameters) == 3:
+        if len(self.parameters) == 4:
             return
         num = len(self.parameters) - 1
         self.parameters[f"P_{num}"].label.destroy()

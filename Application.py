@@ -81,7 +81,17 @@ class Application:
         self.input_f.end_solution()
 
     def to_the_end(self):
-        self.solver.solve()
+        while self.solver.generation_number < self.solver.max_generations:
+            if len(self.data_storage.populations) >= 1:
+                self.input_f.enable_step_backward()
+            
+            population = self.solver.population
+            self.data_storage.add_new_population()
+            for ind in population:
+                self.data_storage.add_solution(Solution(ind, self.solver.evaluate(ind)))
+            
+            self.solver.advance()
+        
         self.update_info()
         self.input_f.enable_input()
 
@@ -94,6 +104,9 @@ class Application:
 
         self.solver.advance()
         self.update_info()
+
+        if self.solver.generation_number == self.solver.max_generations:
+            self.input_f.enable_input()
 
     def step_backward(self):
         self.input_f.enable_step_backward()
