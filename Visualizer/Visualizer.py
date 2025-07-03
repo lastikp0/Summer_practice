@@ -1,3 +1,5 @@
+import tkinter as tk
+
 from Visualizer.Components.InputFrames import *
 from Visualizer.Components.OutputFrames import *
 from Visualizer.Components.Panels import *
@@ -96,7 +98,7 @@ class Visualizer:
         self.solutions_frame.clear_data()
     
     def show_warning(self, text):
-        tkinter.messagebox.showwarning(message=text)
+        tk.messagebox.showwarning(message=text)
 
 
 class InputFacade:

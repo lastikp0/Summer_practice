@@ -9,6 +9,13 @@ class DataStorage:
     def get_matrices(self):
         return self.matrices_sizes
 
+    def clear_solutions(self):
+        self.solutions = []
+
+    def clear(self):
+        self.matrices_sizes = []
+        self.solutions = []
+
 
 class Solution:
     def __init__(self, chromosome, cost):

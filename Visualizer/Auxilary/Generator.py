@@ -4,7 +4,7 @@ import random
 class GeneratorParams:
     @staticmethod
     def generate(size=None):
-        return [100, 0.9, 0.1, 150, 0, 0]
+        return [10, 0.9, 0.1, 150, 0, 0]
 
 
 class GeneratorMatrix:
