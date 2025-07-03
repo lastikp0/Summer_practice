@@ -158,6 +158,15 @@ class Solver:
 
         return individual
 
+    def set_gen(self, gen_number, population, avg_all_gens, best_all_gens):
+        self.generation_number = gen_number
+
+        self.population = population.copy()
+        self.fitness_values = list(map(self.evaluate, self.population))
+
+        self.avg_all_gens = avg_all_gens.copy()
+        self.best_all_gens = best_all_gens.copy()
+
     def advance(self):
         self.generation_number += 1
 
