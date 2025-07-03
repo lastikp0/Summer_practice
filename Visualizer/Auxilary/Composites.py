@@ -157,7 +157,7 @@ class SolutionBox:
         self.write_info("","")
         self.write_answer("")
         
-    def process_parentheses(self, matrices, chromosome):          # HOLY FUCKING SHIT: 40,000 TODO: figure it out
+    def process_parentheses(self, matrices, chromosome):
 
         # Create mutable matrix objects with unique IDs
         pairs = [self.Mtr(f"[{matrices[i - 1]}x{matrices[i]}]", uid=i)
