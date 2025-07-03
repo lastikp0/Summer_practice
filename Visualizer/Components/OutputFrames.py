@@ -104,7 +104,7 @@ class GraphFrame(DisplayFrame):
         self.best_fitness_info.frame.grid(row=3, sticky="w")
 
     def display_info(self, generation_number, avg_fitness, best_fitness):
-        self.generation_info.write(genration_number)
+        self.generation_info.write(generation_number)
         self.average_fitness_info.write(avg_fitness)
         self.best_fitness_info.write(best_fitness)
 
