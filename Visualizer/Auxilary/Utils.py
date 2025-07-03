@@ -105,7 +105,7 @@ class FileUtils:
         info = " ".join([x.strip() for x in file.readlines() if not x.isspace()])
         data = []
         try:
-            data = [float(x) for x in info.split(" ")]
+            data = info.split()
         except ValueError:
             print("invalid format")
             pass

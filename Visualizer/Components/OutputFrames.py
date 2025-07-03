@@ -109,3 +109,4 @@ class GraphFrame(DisplayFrame):
 
     def clear_data(self):
         self.graph.figure.clear()
+        self.graph.draw()

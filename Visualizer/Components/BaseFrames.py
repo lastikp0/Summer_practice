@@ -59,13 +59,15 @@ class InputFrame(BaseFrame):
     def read_data(self):
         filepath = fd.askopenfilename()
         data = FileUtils.read_from_file(filepath)
-        print(data)  # TODO: set the logic properly...
         if not data:
             return
         i = 0
+        self.clear_data()
         for entrybox in self.parameters.values():
+            if i == len(data):
+                break
             entrybox.write(data[i])
-            i += 1  # TODO: we can have more fields than numbers in file... (index error)
+            i += 1
 
     def clear_data(self):
         for entrybox in self.parameters.values():
