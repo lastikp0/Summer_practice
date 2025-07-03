@@ -72,24 +72,13 @@ class InputFrame(BaseFrame):
             entrybox.clear()
 
     def get_parameter(self, parameter_name):
-        if '-' in self.parameters[parameter_name].read():
-            raise ValueError
-        if parameter_name in ["crossover_prob", "mutation_prob"]:
-            return float(self.parameters[parameter_name].read())
-        if parameter_name == "mutation_type":
-            return {"обмен" : "swap", "обращение" : "reverse", "перетасовка" : "shuffle"}[self.parameters[parameter_name].read()]
-        return int(self.parameters[parameter_name].read())
-
+        return self.parameters[parameter_name].read()
 
     def get_all_parameters(self):
         res = []
-
         for entrybox in self.parameters.values():
-            if '-' in entrybox.read():
-                raise ValueError
-            res.append(int(entrybox.read()))
+            res.append(entrybox.read())
         return res
-
 
     def disable_input(self):
         for entrybox in self.parameters.values():

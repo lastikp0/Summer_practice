@@ -36,14 +36,30 @@ class Application:
         self.viz.display_best_solution(list(map(self.solver.evaluate, population)).index(self.solver.get_best()))
         self.viz.display_graph(self.solver.avg_all_gens, self.solver.best_all_gens)
 
+
+    @staticmethod
+    def int_validation(var):
+        var = int(var)
+        if var <= 0:
+            raise ValueError
+        return var
+
+    @staticmethod
+    def float_validation(var):
+        var = float(var)
+        if var < 0 or var > 1:
+            raise ValueError
+        return var
+
+
     def solve(self):
         try:
-            matrices_sizes = self.input_f.get_matrices_sizes()
-            population_size = self.input_f.get_algorithm_parameter("population_size")
-            crossover_prob = self.input_f.get_algorithm_parameter("crossover_prob")
-            mutation_prob = self.input_f.get_algorithm_parameter("mutation_prob")
-            max_generations = self.input_f.get_algorithm_parameter("max_generations")
-            mutation_type = self.input_f.get_algorithm_parameter("mutation_type")
+            matrices_sizes = list(map(self.int_validation, self.input_f.get_matrices_sizes()))
+            population_size = self.int_validation(self.input_f.get_algorithm_parameter("population_size"))
+            crossover_prob = self.float_validation(self.input_f.get_algorithm_parameter("crossover_prob"))
+            mutation_prob = self.float_validation(self.input_f.get_algorithm_parameter("mutation_prob"))
+            max_generations = self.int_validation(self.input_f.get_algorithm_parameter("max_generations"))
+            mutation_type = {"обмен": "swap", "обращение": "reverse", "перетасовка": "shuffle"}[self.input_f.get_algorithm_parameter("mutation_type")]
 
         except ValueError:
             self.viz.show_warning("Введены некорректные данные")
