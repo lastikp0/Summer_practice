@@ -17,6 +17,9 @@ class DataStorage:
     def add_solution(self, solution):
         self.populations[-1].append(solution)
 
+    def pop_population(self):
+        self.populations.pop()
+
     def get_population(self):
         return self.populations[-1]
 

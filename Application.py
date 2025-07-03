@@ -93,7 +93,15 @@ class Application:
         self.update_population()
 
     def step_backward(self):
-        pass
+        self.data_storage.pop_population()
+        print(len(self.data_storage.populations))
+        self.solver.set_gen(self.solver.generation_number-1, [x.chromosome for x in self.data_storage.get_population()], self.solver.avg_all_gens[:-1], self.solver.best_all_gens[:-1])
+
+        population = self.solver.population
+        self.viz.display_solutions_table(range(len(population)))
+        self.viz.display_best_solution(list(map(self.solver.evaluate, population)).index(self.solver.get_best()))
+        self.viz.display_graph(self.solver.avg_all_gens, self.solver.best_all_gens)
+
 
 # ✓: Generators for Parameters and Matrix sizes
 # ✓: Proper reading from file function
