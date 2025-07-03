@@ -97,11 +97,14 @@ class GraphFrame(DisplayFrame):
     def init_contents(self):
         self.graph.get_tk_widget().grid(row=0, column=0)
 
-    def draw_graph(self, x_arr, y_arr):
+    def draw_graph(self, y1_arr, y2_arr):
+        x_arr = range(1, len(y1_arr)+1)
         self.clear_data()
         axes = self.graph.figure.add_subplot(111)
-        axes.plot(x_arr, y_arr, '-rh', linewidth=1, markersize=0)
+        axes.plot(x_arr, y1_arr, color='red', linewidth=1, markersize=0, label='Среднее по популяции')
+        axes.plot(x_arr, y2_arr, color='green', linewidth=1, markersize=0, label='Минимальное по популяции')
         axes.grid()
+        axes.legend()
         self.graph.draw()
 
     def clear_data(self):

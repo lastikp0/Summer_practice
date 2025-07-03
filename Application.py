@@ -34,7 +34,7 @@ class Application:
 
         self.viz.display_solutions_table(range(len(population)))
         self.viz.display_best_solution(list(map(self.solver.evaluate, population)).index(self.solver.get_best()))
-        self.viz.display_graph(range(len(self.solver.avg_all_gens)), self.solver.avg_all_gens)
+        self.viz.display_graph(self.solver.avg_all_gens, self.solver.best_all_gens)
 
     def solve(self):
         self.input_f.disable_input()
@@ -55,6 +55,7 @@ class Application:
         self.output_f.clear_output()
         self.input_f.clear_input()
         self.data_storage.clear()
+        self.viz.clear_output()
 
 
     def to_the_end(self):
