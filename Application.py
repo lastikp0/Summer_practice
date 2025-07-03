@@ -34,6 +34,7 @@ class Application:
             self.data_storage.add_solution(Solution(ind, self.solver.evaluate(ind)))
 
         self.viz.display_solutions_table(range(len(population)))
+        #self.viz.display_best_solution(self.solver.get_best_index()))
         self.viz.display_best_solution(list(map(self.solver.evaluate, population)).index(self.solver.get_best()))
         self.viz.display_graph(self.solver.avg_all_gens, self.solver.best_all_gens)
 
@@ -99,6 +100,7 @@ class Application:
 
         population = self.solver.population
         self.viz.display_solutions_table(range(len(population)))
+        #self.viz.display_best_solution(self.solver.get_best_index()))
         self.viz.display_best_solution(list(map(self.solver.evaluate, population)).index(self.solver.get_best()))
         self.viz.display_graph(self.solver.avg_all_gens, self.solver.best_all_gens)
 
