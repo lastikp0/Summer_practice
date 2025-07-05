@@ -1,6 +1,8 @@
 from Visualizer.Components.BaseFrames import InputFrame
 from Visualizer.Auxilary.Composites import EntryBox, ScrollableFrame, DropdownChoice
 from Visualizer.Auxilary.Utils import GUIUtils
+from tkinter import filedialog as fd
+from Visualizer.Auxilary.Utils import FileUtils
 
 PARAMETERS = {"Размер популяции": "population_size",
               "Вероятность скрещивания": "crossover_prob",
@@ -37,7 +39,7 @@ class ParameterFrame(InputFrame):
 class MatrixFrame(InputFrame):
     def __init__(self, master, name, generator):
         super().__init__(master, name, generator)
-        self.scrollable_frame = ScrollableFrame(self.contents, 315, 100)
+        self.scrollable_frame = ScrollableFrame(self.contents, 315, 120)
 
     def init_contents(self):
 
@@ -57,6 +59,23 @@ class MatrixFrame(InputFrame):
         bt2 = GUIUtils.make_button(self.contents, "Удалить", self.remove_parameter)
         bt2.grid(row=1, column=1, sticky="w", padx=5, pady=(0, 5))
         self.buttons += [bt1, bt2]
+        
+    def read_data(self):
+        filepath = fd.askopenfilename()
+        data = FileUtils.read_from_file(filepath)
+        if not data:
+            return
+        i = 0
+        while len(data) < 4:
+            data.append(" - ")
+        while len(self.parameters) > len(data):
+            self.remove_parameter()
+        while len(self.parameters) < len(data):
+            self.add_parameter()
+        self.clear_data()
+        for entrybox in self.parameters.values():
+            entrybox.write(data[i])
+            i += 1
 
     def add_parameter(self):
         num = len(self.parameters)

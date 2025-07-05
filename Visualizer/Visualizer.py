@@ -51,6 +51,7 @@ class Visualizer:
                                          step_bwd_command,
                                          to_the_end_command)
         self.control_panel.frame.grid(row=3, column=0, columnspan=3, sticky="ew")
+        self.master.grid_columnconfigure(2, weight=1)
 
     def get_algorithm_parameter(self, parameter_key: str):
         return self.parameters_frame.get_parameter(parameter_key)
